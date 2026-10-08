@@ -1,0 +1,10 @@
+<%- include('layout/header') %>
+<div class="kotak login">
+  <h2>Login</h2>
+  <form action="/login" method="POST">
+    <label>Username <input type="text" name="username" required></label>
+    <label>Password <input type="password" name="password" required></label>
+    <button class="btn">Masuk</button>
+  </form>
+</div>
+<%- include('layout/footer') %>

@@ -1,0 +1,95 @@
+<%- include('../layout/header') %>
+<h2>Cek Karakter</h2>
+
+<div class="dua-kolom">
+
+  <!-- cek karakter -->
+  <div class="kolom-kiri">
+    <div class="kotak">
+      <h3>Input</h3>
+      <% if (error) { %><div class="pesan error"><%= error %></div><% } %>
+      <%- include('_form', { aksi: '/cek', tombol: 'Hitung', input1: input1, input2: input2, tipe: tipe }) %>
+      <p class="kecil-teks">Hitung persentase karakter Input 1 yang ada di Input 2.</p>
+    </div>
+  </div>
+
+  <!-- statistik dan riwayat -->
+  <div class="kolom-kanan">
+    <!-- statisti -->
+    <div class="kotak">
+      <h3>Statistik</h3>
+      <div class="stat">
+        <div><span>Jumlah</span><b><%= stat.jumlah %></b></div>
+        <div><span>Rata-rata</span><b><%= stat.rataRata %>%</b></div>
+        <div><span>Tertinggi</span><b><%= stat.tertinggi %>%</b></div>
+        <div><span>Terendah</span><b><%= stat.terendah %>%</b></div>
+      </div>
+    </div>
+    <!-- riwayat -->
+    <div class="kotak">
+      <h3>Riwayat</h3>
+      <table>
+        <tr><th>No</th><th>Input 1</th><th>Input 2</th><th>Tipe</th><th>Hasil</th><th>Aksi</th></tr>
+        <% if (riwayat.length === 0) { %>
+          <tr><td colspan="6">Belum ada data</td></tr>
+        <% } %>
+        <% riwayat.forEach(function (c, i) { %>
+          <tr class="<%= hasil && hasil.id === c.id ? 'aktif' : '' %>">
+            <td><%= i + 1 %></td>
+            <td><%= c.input1 %></td>
+            <td><%= c.input2 %></td>
+            <td><%= c.type() %></td>
+            <td><b><%= c.persen %>%</b> (<%= c.jumlahCocok %>/<%= c.total %>)</td>
+            <td class="aksi">
+              <a class="btn kecil abu" href="/cek/<%= c.id %>">Lihat</a>
+              <a class="btn kecil kuning" href="/cek/<%= c.id %>/edit">Edit</a>
+              <form action="/cek/<%= c.id %>/hapus" method="POST" onsubmit="return confirm('Yakin hapus?')">
+                <button class="btn kecil merah">Hapus</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- modal hasil cek-->
+<% if (hasil) { %>
+<div class="modal-latar" id="modal">
+  <div class="modal-isi">
+    <a href="/cek" class="modal-tutup" title="Tutup">&times;</a>
+
+    <h3>Hasil Perhitungan</h3>
+    <p class="kecil-teks"><%= hasil.type() %></p>
+    <p>Input 1: <b><%= hasil.input1 %></b><br>Input 2: <b><%= hasil.input2 %></b></p>
+
+    <div class="persen"><%= hasil.persen %>%</div>
+    <p><%= hasil.jumlahCocok %> dari <%= hasil.total %> karakter Input 1 ada di Input 2.<br>
+       Penilaian: <b><%= hasil.kategori() %></b></p>
+
+    <div>
+      <% hasil.detail.forEach(function (d) { %>
+        <span class="huruf <%= d.ketemu ? 'ada' : 'tidak' %>"><%= d.huruf === ' ' ? '_' : d.huruf %></span>
+      <% }); %>
+    </div>
+    <p class="kecil-teks">Hijau = ada, merah = tidak ada</p>
+
+    <a class="btn" href="/cek">Tutup</a>
+    <a class="btn abu" href="/cek/<%= hasil.id %>/edit">Edit</a>
+  </div>
+</div>
+
+<script>
+  // tutp modal
+  var modal = document.getElementById('modal');
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) window.location.href = '/cek';
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') window.location.href = '/cek';
+  });
+</script>
+<% } %>
+<%- include('../layout/footer') %>

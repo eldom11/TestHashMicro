@@ -1,0 +1,12 @@
+<form action="<%= aksi %>" method="POST" class="cek">
+  <label>Input 1 <input type="text" name="input1" value="<%= input1 %>"></label>
+  <label>Input 2 <input type="text" name="input2" value="<%= input2 %>"></label>
+  <label>Tipe
+    <select name="tipe">
+      <option value="sensitive" <%= tipe === 'sensitive' ? 'selected' : '' %>>Case sensitive</option>
+      <option value="insensitive" <%= tipe === 'insensitive' ? 'selected' : '' %>>Non case sensitive</option>
+    </select>
+  </label>
+  <button class="btn"><%= tombol %></button>
+  <% if (tombol === 'Simpan') { %><a class="btn merah" href="/cek">Batal</a><% } %>
+</form>

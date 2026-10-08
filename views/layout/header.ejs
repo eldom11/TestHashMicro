@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= judul %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<% if (sudahLogin) { %>
+<nav>
+  <b>Eldoni Mosul - Tes HashMicro</b>
+  <form action="/logout" method="POST" class="kanan">
+    <span><%= username %></span> <button class="btn kecil merah">Logout</button>
+  </form>
+</nav>
+<% } %>
+<main>
+<% if (pesan) { %>
+  <div class="pesan <%= pesan.jenis %>"><%= pesan.isi %></div>
+<% } %>

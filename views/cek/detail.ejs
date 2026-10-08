@@ -1,0 +1,21 @@
+<%- include('../layout/header') %>
+<h2>Hasil Cek</h2>
+
+<div class="kotak">
+  <p>Input 1: <b><%= cek.input1 %></b><br>
+     Input 2: <b><%= cek.input2 %></b><br>
+     Tipe: <b><%= cek.type() %></b></p>
+
+  <h2>Hasil: <%= cek.persen %>%</h2>
+  <p><%= cek.jumlahCocok %> dari <%= cek.total %> karakter Input 1 ada di Input 2.<br>
+     Penilaian: <b><%= cek.kategori() %></b></p>
+
+  <% cek.detail.forEach(function (d) { %>
+    <span class="huruf <%= d.ketemu ? 'ada' : 'tidak' %>"><%= d.huruf === ' ' ? '_' : d.huruf %></span>
+  <% }); %>
+  <p class="kecil-teks">Hijau = ada, merah = tidak ada</p>
+
+  <a class="btn abu" href="/cek">Kembali</a>
+  <a class="btn" href="/cek/<%= cek.id %>/edit">Edit</a>
+</div>
+<%- include('../layout/footer') %>

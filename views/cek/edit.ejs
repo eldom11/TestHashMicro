@@ -1,0 +1,9 @@
+<%- include('../layout/header') %>
+<h2>Edit Cek Karakter</h2>
+
+<% if (error) { %><div class="pesan error"><%= error %></div><% } %>
+
+<div class="kotak edit">
+  <%- include('_form', { aksi: '/cek/' + cek.id + '/update', tombol: 'Simpan', input1: input1, input2: input2, tipe: tipe }) %>
+</div>
+<%- include('../layout/footer') %>
